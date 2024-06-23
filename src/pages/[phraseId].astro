@@ -1,0 +1,49 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { phrases } from '../phrases';
+
+export function getStaticPaths() {
+  return phrases.map((phrase, index) => ({
+    params: { phraseId: index + 1 },
+    props: { phrase },
+  }));
+}
+
+const { phraseId } = Astro.params;
+const { phrase } = Astro.props;
+---
+
+<Layout title={phrase}>
+	<main>
+    <h1 transition:name={`phrase-${phraseId}`}>{phrase}</h1>
+    <a href="/" data-astro-history="push">Volver a la lista de comparaciones</a>
+	</main>
+</Layout>
+
+<style>
+  a {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+  }
+
+  h1 {
+    margin: 0;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 1rem;
+    min-height: calc(100vh - 2rem);
+    margin: 0 auto;
+    max-width: 70ch;
+  }
+</style>

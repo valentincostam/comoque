@@ -1,0 +1,51 @@
+---
+import { ViewTransitions } from 'astro:transitions';
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Chistes argentos" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+    <ViewTransitions />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<script>
+  document.addEventListener("astro:before-swap", (event) => {
+    if (event.direction !== "forward") return;
+    
+    sessionStorage.setItem(`scrollPosition-${window.location.pathname}`, window.scrollY.toString());
+  });
+  
+  document.addEventListener("astro:after-swap", (event) => {
+    const scrollPosition = sessionStorage.getItem(`scrollPosition-${window.location.pathname}`);
+    
+    if (!scrollPosition) return;
+
+    window.scrollTo({
+      top: parseInt(scrollPosition, 10),
+      behavior: "instant",
+    });
+    
+    sessionStorage.removeItem(`scrollPosition-${window.location.pathname}`);
+  });
+</script>
+
+<style is:global>
+  body {
+    margin: 0;
+  }
+</style>

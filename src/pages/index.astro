@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { phrases } from '../phrases';
+---
+
+<Layout title="Las comparaciones que nos gustan ・ comoqué">
+	<main>
+    <h1>comoqué</h1>
+
+    <ol>
+      {phrases.map((phrase, index) => (
+        <li>
+          <a href={String(index + 1)} transition:name={`phrase-${index + 1}`}>{phrase}</a>
+        </li>
+      ))}
+    </ol>
+
+    <p>¿Faltó una comparación? <a href="https://forms.gle/m46nCp3iTx5cRers8">Contame cuál</a>.</p>
+
+    <footer>
+      Hecho por <a href="https://x.com/valentincostam">@valentincostam</a>
+    </footer>
+	</main>
+</Layout>
+
+<style>
+  main {
+    padding: 1rem;
+    margin: 0 auto;
+    max-width: 70ch;
+  }
+
+  h1 {
+    margin: 2rem 0;
+    text-align: center;
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 3rem;
+    display: grid;
+    gap: 1rem;
+  }
+
+  li {
+    font-size: 1.5rem;
+  }
+
+  li::marker {
+    color: #bbb;
+  }
+
+  p {
+    margin: 3rem 0;
+    text-align: center;
+  }
+
+  footer {
+    margin: 3rem 0;
+    text-align: center;
+  }
+</style>
